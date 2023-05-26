@@ -1,7 +1,7 @@
 - hosts: web1
   tasks:
   - name: Install OpenJDK
-    yum:
+    package:
       name:
       - java-1.8.0-openjdk
       - maven
