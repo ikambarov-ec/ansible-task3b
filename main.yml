@@ -1,0 +1,23 @@
+- hosts: all
+  tasks:
+  - name: Install OpenJDK
+    yum:
+      name:
+      - java-1.8.0-openjdk
+      - maven
+
+  - name: Clone Repo
+    git:
+      repo: https://github.com/ikambarov/spring-petclinic.git
+      dest: /spring
+
+  - name: Run Maven Wrapper
+    shell: "./mvnw package"
+    args:
+      chdir: /spring
+      creates: /spring/target
+
+  - name: Start App
+    shell: 'pkill java; sleep 3; nohup java -jar target/spring-petclinic-2.3.1.BUILD-SNAPSHOT.jar &'
+    args:
+      chdir: /spring
